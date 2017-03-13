@@ -13,6 +13,21 @@
 #--------------------------------------------------------------------------------
 makeCacheMatrix <- function(x = matrix()) 
 {
+    # checkSquare() ensures that the matrix passed in is "square" (i.e. 
+    # possesses the same number of rows and columns). As it is not possible to 
+    # calculate the inverse of a non-square matrix, this method will call stop() 
+    # if the matrix is not square)
+    checkSquare <- function(m)
+    {
+        if (nrow(m) != ncol(m))
+        {
+            stop("The matrix passed in is not square and therefore cannot have its inverse calculated")
+        }
+    }
+    
+    # ensure that the matrix passed in is square
+    checkSquare(x)
+    
     # set the inverse function initially to NULL
     inverse <- NULL
     
@@ -20,6 +35,7 @@ makeCacheMatrix <- function(x = matrix())
     # clears the cached inverse matrix
     set <- function(y) 
     {
+        checkSquare(y)
         x <<- y
         inverse <<- NULL
     }
